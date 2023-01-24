@@ -1,0 +1,39 @@
+{
+  "project_info": {
+    "project_number": "466225612668",
+    "project_id": "aquaup-1d5b8",
+    "storage_bucket": "aquaup-1d5b8.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:466225612668:android:cb50fd65f1f6d8318ec6f9",
+        "android_client_info": {
+          "package_name": "com.example.aqua_up"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "466225612668-jmu3m6nr3atgofm06jl38psg7l1sdc5d.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyAsMFIBVxHEQwcXjHbEI3u3x3Wo80IVq0E"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "466225612668-jmu3m6nr3atgofm06jl38psg7l1sdc5d.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}

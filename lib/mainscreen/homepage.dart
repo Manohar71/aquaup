@@ -1,3 +1,4 @@
+import 'package:aqua_up/backend/insert.dart';
 import 'package:aqua_up/mainscreen/facts.dart';
 import 'package:aqua_up/mainscreen/info.dart';
 import 'package:aqua_up/navigation.dart';
@@ -58,7 +59,8 @@ class _homepageState extends State<homepage> {
                           height: 60, child: Image.asset('assets/mainl.png'))),
                   IconButton(
                       onPressed: () {
-                        Get.to(() => info());
+                        // Get.to(() => info());
+                        Get.to(() => insert());
                       },
                       icon: const Icon(Icons.info_outline))
                 ],
@@ -107,7 +109,9 @@ class _homepageState extends State<homepage> {
             ),
             const Spacer(),
             const Center(child: slider()),
-           SizedBox(height: 30,)
+            SizedBox(
+              height: 30,
+            )
           ],
         );
       }),
