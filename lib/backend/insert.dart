@@ -10,6 +10,7 @@ class insert extends StatefulWidget {
 
 class _insertState extends State<insert> {
   final controller = TextEditingController();
+  final controller1 = TextEditingController();
   bool loading = false;
   final dbref = FirebaseDatabase.instance.ref('facts');
   @override
@@ -17,23 +18,28 @@ class _insertState extends State<insert> {
     return Scaffold(
       body: Column(
         children: [
-          SizedBox(height: 50),
+          const SizedBox(height: 50),
           TextFormField(
             controller: controller,
-            decoration: InputDecoration(
-                hintText: ' this looks good', border: OutlineInputBorder()),
+            decoration: const InputDecoration(
+                hintText: 'Enter teh image URL', border: OutlineInputBorder()),
           ),
-          SizedBox(
+          TextFormField(
+            controller: controller1,
+            decoration: const InputDecoration(
+                hintText: 'Enter the fact', border: OutlineInputBorder()),
+          ),
+          const SizedBox(
             height: 30,
           ),
           ElevatedButton(
               onPressed: () async {
-                await dbref.update({
-                  'image': '',
-                  'text':""
-                  });
+                await dbref.child(DateTime.now().millisecond.toString()).update({
+                  'image': controller.text.toString(),
+                  'text': controller1.text.toString(),
+                });
               },
-              child: Icon(Icons.add))
+              child: const Text("Add"))
         ],
       ),
     );
