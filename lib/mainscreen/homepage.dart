@@ -42,9 +42,9 @@ class _homepageState extends State<homepage> {
               height: 40,
             ),
             Padding(
-              padding: const EdgeInsets.fromLTRB(10, 0, 10, 0),
+              padding:  EdgeInsets.fromLTRB(MediaQuery.of(context).size.width*0.1, 0, 10, 0),
               child: Row(
-                mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                // mainAxisAlignment: MainAxisAlignment.spaceBetween,
                 children: [
                   IconButton(
                       onPressed: () {
@@ -59,8 +59,8 @@ class _homepageState extends State<homepage> {
                           height: 60, child: Image.asset('assets/mainl.png'))),
                   IconButton(
                       onPressed: () {
-                        // Get.to(() => info());
-                        Get.to(() => insert());
+                         Get.to(() => info());
+                        // Get.to(() => insert());
                       },
                       icon: const Icon(Icons.info_outline))
                 ],

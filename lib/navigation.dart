@@ -1,5 +1,7 @@
+import 'package:aqua_up/main.dart';
 import 'package:aqua_up/mainscreen/homepage.dart';
 import 'package:aqua_up/slider.dart';
+import 'package:firebase_database/firebase_database.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:percent_indicator/percent_indicator.dart';
@@ -12,8 +14,23 @@ class navigation extends StatefulWidget {
 }
 
 class _navigationState extends State<navigation> {
-  late int mlperday = 0;
-  late int litperday = 0;
+  late int mlperday;
+  late int litperday ;
+  final dbref = FirebaseDatabase.instance.ref('data');
+  final mainref = FirebaseDatabase.instance.ref('data/defml');
+  @override
+  void initstate() {
+    super.initState();
+    read_data();
+  }
+
+  void read_data() {
+    dbref.once().then((DataSnapshot) {
+      final data = DataSnapshot.snapshot.value as Map;
+      mlperday = data['def_ml'];
+      litperday= data['def_lit'];
+    });
+  }
   @override
   Widget build(BuildContext context) {
     return Drawer(
@@ -66,11 +83,18 @@ class _navigationState extends State<navigation> {
                     padding: EdgeInsets.zero,
                     icon: const Icon(Icons.keyboard_double_arrow_down_rounded),
                     color: Colors.white,
-                    onPressed: () {
-                      setState(() {
-                        mlperday = mlperday - 100;
-                        Get.put(homepage(deflit: mlperday, defml: litperday));
-                       // homepage(defml: mlperday, deflit: litperday);
+                    onPressed: () async {
+                      setState(() async {
+                        if (mlperday > 0) {
+                          mlperday = mlperday - 100;
+                          await dbref.set({
+                            'def_ml': mlperday.toString(),
+                            'def_lit': litperday.toString(),
+                          });
+                          Get.put(homepage(
+                              deflit: mlperday, defml: litperday.toInt()));
+                        }
+                        // homepage(defml: mlperday, deflit: litperday);
                       });
                     },
                   ),
@@ -90,9 +114,14 @@ class _navigationState extends State<navigation> {
                     icon: const Icon(Icons.keyboard_double_arrow_up_rounded),
                     color: Colors.white,
                     onPressed: () {
-                      setState(() {
+                      read_data();
+                      setState(() async {
                         mlperday = mlperday + 100;
-                        homepage(defml: mlperday, deflit: litperday);
+                        await dbref.set({
+                          'def_ml': mlperday,
+                          'def_lit': litperday,
+                        });
+                        homepage(defml: mlperday, deflit: litperday.toInt());
                       });
                     },
                   ),
@@ -124,9 +153,10 @@ class _navigationState extends State<navigation> {
                     icon: const Icon(Icons.keyboard_double_arrow_down_rounded),
                     color: Colors.white,
                     onPressed: () {
+                      litperday = 10;
                       setState(() {
                         litperday = litperday - 1;
-                        homepage(defml: mlperday, deflit: litperday);
+                        homepage(defml: mlperday, deflit: litperday.toInt());
                       });
                     },
                   ),
@@ -148,7 +178,7 @@ class _navigationState extends State<navigation> {
                     onPressed: () {
                       setState(() {
                         litperday = litperday + 1;
-                        homepage(defml: mlperday, deflit: litperday);
+                        homepage(defml: mlperday, deflit: litperday.toInt());
                       });
                     },
                   ),
@@ -158,15 +188,15 @@ class _navigationState extends State<navigation> {
           ),
           const Padding(
               padding: EdgeInsets.fromLTRB(10.0, 40, 10, 0), child: slider()),
-         Padding(
-           padding: const EdgeInsets.fromLTRB(10.0, 30, 10, 0),
-           child: ElevatedButton(
-                  onPressed: () {
-                    Get.changeTheme(
-                        Get.isDarkMode ? ThemeData.light() : ThemeData.dark());
-                  },
-                  child: Text("Change Theme")),
-         )
+          Padding(
+            padding: const EdgeInsets.fromLTRB(10.0, 30, 10, 0),
+            child: ElevatedButton(
+                onPressed: () {
+                  Get.changeTheme(
+                      Get.isDarkMode ? ThemeData.light() : ThemeData.dark());
+                },
+                child: Text("Change Theme")),
+          )
         ],
       ),
     );

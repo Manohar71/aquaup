@@ -34,7 +34,7 @@ class _insertState extends State<insert> {
           ),
           ElevatedButton(
               onPressed: () async {
-                await dbref.child(DateTime.now().millisecond.toString()).update({
+                await dbref.push().set({
                   'image': controller.text.toString(),
                   'text': controller1.text.toString(),
                 });
