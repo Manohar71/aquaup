@@ -34,37 +34,34 @@ class _homepageState extends State<homepage> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      drawer: const navigation(),
+      drawer: navigation(),
       body: Builder(builder: (context) {
         return Column(
           children: [
             const SizedBox(
               height: 40,
             ),
-            Padding(
-              padding:  EdgeInsets.fromLTRB(MediaQuery.of(context).size.width*0.1, 0, 10, 0),
-              child: Row(
-                // mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                children: [
-                  IconButton(
-                      onPressed: () {
-                        Scaffold.of(context).openDrawer();
-                      },
-                      icon: const Icon(Icons.menu)),
-                  GestureDetector(
-                      onTap: () {
-                        Get.to(() => facts());
-                      },
-                      child: SizedBox(
-                          height: 60, child: Image.asset('assets/mainl.png'))),
-                  IconButton(
-                      onPressed: () {
-                         Get.to(() => info());
-                        // Get.to(() => insert());
-                      },
-                      icon: const Icon(Icons.info_outline))
-                ],
-              ),
+            Row(
+               mainAxisAlignment: MainAxisAlignment.spaceBetween,
+              children: [
+                IconButton(
+                    onPressed: () {
+                      Scaffold.of(context).openDrawer();
+                    },
+                    icon: const Icon(Icons.menu)),
+                GestureDetector(
+                    onTap: () {
+                      Get.to(() => facts());
+                    },
+                    child: SizedBox(
+                        height: 60, child: Image.asset('assets/mainl.png'))),
+                IconButton(
+                    onPressed: () {
+                        Get.to(() => info());
+                      // Get.to(() => insert());
+                    },
+                    icon: const Icon(Icons.info_outline))
+              ],
             ),
             const SizedBox(
               height: 50,

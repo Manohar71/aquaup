@@ -35,10 +35,6 @@ class _factsState extends State<facts> {
                       Get.back();
                     },
                     icon: const Icon(Icons.arrow_back_ios)),
-                // const Text(
-                //   'Facts',
-                //   textAlign: TextAlign.center,
-                // )
               ],
             ),
           ),
@@ -62,12 +58,16 @@ class _factsState extends State<facts> {
                           ),
                           SizedBox(
                               height: 100,
-                              child: Center(
-                                  child: Text(
-                                snapshot.child('text').value.toString(),
-                                overflow: TextOverflow.fade,
-                                style: const TextStyle(color: Colors.white),
-                              )))
+                              child: Padding(
+                                padding: const EdgeInsets.fromLTRB(10,0,10,0),
+                                child: Center(
+                                    child: Text(
+                                  snapshot.child('text').value.toString(),
+                                  textAlign : TextAlign.center,
+                                  overflow: TextOverflow.fade,
+                                  style: const TextStyle(color: Colors.white, fontWeight: FontWeight.bold),
+                                )),
+                              ))
                         ],
                       ),
                     ),
