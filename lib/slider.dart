@@ -12,6 +12,7 @@ class slider extends StatefulWidget {
 }
 
 class _sliderState extends State<slider> {
+  
   @override
   Widget build(BuildContext context) {
     return ActionSlider.standard(

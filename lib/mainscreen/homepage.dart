@@ -1,8 +1,10 @@
 import 'package:aqua_up/backend/insert.dart';
+import 'package:aqua_up/dimensions.dart';
 import 'package:aqua_up/mainscreen/facts.dart';
 import 'package:aqua_up/mainscreen/info.dart';
 import 'package:aqua_up/navigation.dart';
 import 'package:aqua_up/slider.dart';
+import 'package:firebase_analytics/firebase_analytics.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:lottie/lottie.dart';
@@ -12,10 +14,17 @@ import 'package:shared_preferences/shared_preferences.dart';
 class homepage extends StatefulWidget {
   late int defml;
   late int deflit;
-
-  homepage({required this.deflit, required this.defml});
+  final FirebaseAnalytics analytics;
+  final FirebaseAnalyticsObserver observer;
+  homepage({
+    required this.deflit,
+    required this.defml,
+    required this.analytics,
+    required this.observer,
+  });
   @override
-  State<homepage> createState() => _homepageState(deflit, defml);
+  State<homepage> createState() =>
+      _homepageState(deflit, defml, analytics, observer);
 }
 
 class _homepageState extends State<homepage> {
@@ -23,7 +32,15 @@ class _homepageState extends State<homepage> {
   int ml = 0;
   late int deflit;
   late int defml;
-  _homepageState(this.deflit, this.defml);
+  late FirebaseAnalytics analytics;
+  late FirebaseAnalyticsObserver observer;
+  _homepageState(this.deflit, this.defml, this.analytics, this.observer);
+
+  Future<Null> _sendanlytics() async {
+    await widget.analytics
+        .logEvent(name: 'app_Home', parameters: <String, dynamic>{});
+  }
+
   @override
   void initState() {
     super.initState();
@@ -42,7 +59,7 @@ class _homepageState extends State<homepage> {
               height: 40,
             ),
             Row(
-               mainAxisAlignment: MainAxisAlignment.spaceBetween,
+              mainAxisAlignment: MainAxisAlignment.spaceBetween,
               children: [
                 IconButton(
                     onPressed: () {
@@ -50,14 +67,15 @@ class _homepageState extends State<homepage> {
                     },
                     icon: const Icon(Icons.menu)),
                 GestureDetector(
-                    onTap: () {
+                    onTap: () async {
+                      await _sendanlytics();
                       Get.to(() => facts());
                     },
                     child: SizedBox(
                         height: 60, child: Image.asset('assets/mainl.png'))),
                 IconButton(
                     onPressed: () {
-                        Get.to(() => info());
+                      Get.to(() => info());
                       // Get.to(() => insert());
                     },
                     icon: const Icon(Icons.info_outline))
@@ -72,8 +90,39 @@ class _homepageState extends State<homepage> {
             GestureDetector(
               onDoubleTap: () async {
                 setState(() {
-                  ml = ml + defml;
-                  value = ml / (deflit * 1000);
+                  if (value < 1.0) {
+                    ml = ml + defml;
+                    value = ml / (deflit * 1000);
+                  } else {
+                    showDialog(
+                        context: context,
+                        builder: (context) {
+                          return Dialog(
+                            insetPadding: const EdgeInsets.all(10),
+                              shape: RoundedRectangleBorder(
+                                  borderRadius: BorderRadius.circular(40)),
+                                  child: SizedBox(
+                                    height: screenHeight(context)*0.5,
+                                    width: screenWidth(context)*0.9,
+                                    child: Column(
+                                      children: [
+                                        SizedBox(height: 50,),
+                                        SizedBox(
+                                          height: screenHeight(context)*0.3,
+
+                                          child: Image.asset('assets/congrats.jpg')),
+                                        Text("Congratulations" , style: TextStyle(color: Colors.blue ,fontSize: 20 ,fontWeight: FontWeight.bold ),),
+
+                                        Padding(
+                                          padding: const EdgeInsets.only(top: 10),
+                                          child: Text("You have completed today's challenge" , style: TextStyle(fontWeight: FontWeight.bold),),
+                                        )
+                                      ],
+                                    ),
+                                  ),
+                          );
+                        });
+                  }
                 });
                 await useml.setml(ml);
                 await userpreferences.setvalue(value);

@@ -38,7 +38,7 @@ class _factsState extends State<facts> {
               ],
             ),
           ),
-          Expanded(
+          Flexible(
             child: FirebaseAnimatedList(
               defaultChild: Text('Loading...'),
                 query: ref,

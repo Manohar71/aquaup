@@ -1,23 +1,39 @@
 import 'package:aqua_up/mainscreen/homepage.dart';
+import 'package:firebase_analytics/firebase_analytics.dart';
 import 'package:flutter/material.dart';
 import 'package:animated_splash_screen/animated_splash_screen.dart';
 
-
 class splash extends StatefulWidget {
-  const splash({super.key});
+  splash({
+    required this.title,
+    required this.analytics,
+    required this.observer,
+  });
+  final String title;
+  final FirebaseAnalytics analytics;
+  final FirebaseAnalyticsObserver observer;
 
   @override
-  State<splash> createState() => _splashState();
+  State<splash> createState() => _splashState(this.title , this.analytics , this.observer);
 }
 
 class _splashState extends State<splash> {
+  late String title;
+  late FirebaseAnalytics analytics;
+  late FirebaseAnalyticsObserver observer;
+  _splashState(this.title, this.analytics, this.observer);
+  Future<Null> _sendanlytics() async {
+    await widget.analytics
+        .logEvent(name: 'Departments-brigade', parameters: <String, dynamic>{});
+  }
+
   @override
   Widget build(BuildContext context) {
     return MaterialApp(
       debugShowCheckedModeBanner: false,
       home: AnimatedSplashScreen(
         splash: Image.asset('assets/mainl.png'),
-        nextScreen: homepage(deflit: 4, defml: 100,),
+        nextScreen: homepage(deflit: 4, defml: 100 , analytics : analytics , observer :observer),
       ),
     );
   }
