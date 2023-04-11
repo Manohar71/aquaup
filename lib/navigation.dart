@@ -5,6 +5,7 @@ import 'package:firebase_database/firebase_database.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:percent_indicator/percent_indicator.dart';
+import 'package:horizontal_picker/horizontal_picker.dart';
 
 class navigation extends StatefulWidget {
   const navigation({super.key});

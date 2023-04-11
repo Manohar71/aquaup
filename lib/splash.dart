@@ -1,3 +1,4 @@
+import 'package:aqua_up/auth/sign_in.dart';
 import 'package:aqua_up/mainscreen/homepage.dart';
 import 'package:firebase_analytics/firebase_analytics.dart';
 import 'package:flutter/material.dart';
@@ -33,7 +34,8 @@ class _splashState extends State<splash> {
       debugShowCheckedModeBanner: false,
       home: AnimatedSplashScreen(
         splash: Image.asset('assets/mainl.png'),
-        nextScreen: homepage(deflit: 4, defml: 100 , analytics : analytics , observer :observer),
+        // nextScreen: homepage( analytics : analytics , observer :observer),
+        nextScreen: sign_in(),
       ),
     );
   }

@@ -12,6 +12,7 @@ Future main() async {
   await Firebase.initializeApp();
   await userpreferences.init();
   await useml.init();
+  await setlit.init();
   FlutterError.onError = (errorDetails) {
     // If you wish to record a "non-fatal" exception, please use `FirebaseCrashlytics.instance.recordFlutterError` instead
     FirebaseCrashlytics.instance.recordFlutterFatalError(errorDetails);
@@ -21,27 +22,27 @@ Future main() async {
     FirebaseCrashlytics.instance.recordError(error, stack, fatal: true);
     return true;
   };
-  runApp( MyApp());
+  runApp(MyApp());
 }
 
 class MyApp extends StatelessWidget {
-   MyApp({super.key});
+  const MyApp({super.key});
+  // static FirebaseAnalytics analytics = FirebaseAnalytics.instance;
+  // static FirebaseAnalyticsObserver observer = new FirebaseAnalyticsObserver(analytics: analytics);
   static FirebaseAnalytics analytics = FirebaseAnalytics.instance;
-  static FirebaseAnalyticsObserver observer = new FirebaseAnalyticsObserver(analytics: analytics);
+  static FirebaseAnalyticsObserver observer =
+      FirebaseAnalyticsObserver(analytics: analytics);
   @override
   Widget build(BuildContext context) {
-   
-    return  GetMaterialApp(
-      
-        navigatorObservers: <NavigatorObserver>[observer],
+    return GetMaterialApp(
+      navigatorObservers: <NavigatorObserver>[observer],
       title: 'Flutter Demo',
       debugShowCheckedModeBanner: false,
-      //! this is the analytics part  
+      //! this is the analytics part
       home: splash(
         title: 'opening app',
         analytics: analytics,
         observer: observer,
-
       ),
     );
   }
