@@ -1,4 +1,5 @@
 import 'package:aqua_up/auth/sign_in.dart';
+import 'package:aqua_up/lading%20page/landing.dart';
 import 'package:aqua_up/mainscreen/homepage.dart';
 import 'package:firebase_analytics/firebase_analytics.dart';
 import 'package:flutter/material.dart';
@@ -15,7 +16,8 @@ class splash extends StatefulWidget {
   final FirebaseAnalyticsObserver observer;
 
   @override
-  State<splash> createState() => _splashState(this.title , this.analytics , this.observer);
+  State<splash> createState() =>
+      _splashState(this.title, this.analytics, this.observer);
 }
 
 class _splashState extends State<splash> {
@@ -30,13 +32,14 @@ class _splashState extends State<splash> {
 
   @override
   Widget build(BuildContext context) {
+    bool is_login = login.get_login() ?? false;
     return MaterialApp(
       debugShowCheckedModeBanner: false,
       home: AnimatedSplashScreen(
-        splash: Image.asset('assets/mainl.png'),
-        // nextScreen: homepage( analytics : analytics , observer :observer),
-        nextScreen: sign_in(),
-      ),
+          splash: Image.asset('assets/mainl.png'),
+          // nextScreen: homepage( analytics : analytics , observer :observer),
+          //  nextScreen: sign_in(),
+          nextScreen: is_login ? homepage() : const landing()),
     );
   }
 }

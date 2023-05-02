@@ -5,7 +5,7 @@ import 'package:get/get.dart';
 import 'mainscreen/facts.dart';
 
 class slider extends StatefulWidget {
-  const slider({super.key});
+  const slider();
 
   @override
   State<slider> createState() => _sliderState();

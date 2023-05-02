@@ -1,3 +1,4 @@
+import 'package:aqua_up/auth/sign_in.dart';
 import 'package:aqua_up/mainscreen/homepage.dart';
 import 'package:aqua_up/splash.dart';
 import 'package:firebase_core/firebase_core.dart';
@@ -6,13 +7,16 @@ import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:firebase_analytics/firebase_analytics.dart';
+import 'package:cron/cron.dart';
 
 Future main() async {
   WidgetsFlutterBinding.ensureInitialized();
+  final corn = Cron();
   await Firebase.initializeApp();
   await userpreferences.init();
   await useml.init();
   await setlit.init();
+  await login.init();
   FlutterError.onError = (errorDetails) {
     // If you wish to record a "non-fatal" exception, please use `FirebaseCrashlytics.instance.recordFlutterError` instead
     FirebaseCrashlytics.instance.recordFlutterFatalError(errorDetails);
@@ -26,7 +30,7 @@ Future main() async {
 }
 
 class MyApp extends StatelessWidget {
-  const MyApp({super.key});
+  const MyApp();
   // static FirebaseAnalytics analytics = FirebaseAnalytics.instance;
   // static FirebaseAnalyticsObserver observer = new FirebaseAnalyticsObserver(analytics: analytics);
   static FirebaseAnalytics analytics = FirebaseAnalytics.instance;

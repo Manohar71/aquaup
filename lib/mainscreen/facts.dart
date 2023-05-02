@@ -8,7 +8,7 @@ import 'package:get/get.dart';
 import 'package:get/get_core/src/get_main.dart';
 
 class facts extends StatefulWidget {
-  const facts({super.key});
+  const facts();
 
   @override
   State<facts> createState() => _factsState();

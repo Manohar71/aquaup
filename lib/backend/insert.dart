@@ -2,7 +2,7 @@ import 'package:firebase_database/firebase_database.dart';
 import 'package:flutter/material.dart';
 
 class insert extends StatefulWidget {
-  const insert({super.key});
+  const insert();
 
   @override
   State<insert> createState() => _insertState();

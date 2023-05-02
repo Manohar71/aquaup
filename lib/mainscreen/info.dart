@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 
 class info extends StatefulWidget {
-  const info({super.key});
+  const info();
 
   @override
   State<info> createState() => _infoState();
